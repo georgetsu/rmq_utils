@@ -151,7 +151,12 @@ def delete(params, channel):
 
 def from_existing_que(params, channel):
     rmq_tools.console_log("Начитаем считывание.")
-    channel.basic_consume(on_message, queue=params.queue)
+    print('Params:{}'.format(params))
+    print('Channel:{}'.format(channel))
+    queue_name=params.queue
+    print('Queue:{}'.format(params.queue))
+
+    channel.basic_consume(on_message_callback=on_message, queue=queue_name)
     try:
         channel.start_consuming()
     except KeyboardInterrupt:
